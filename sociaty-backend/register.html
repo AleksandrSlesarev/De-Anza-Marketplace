@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Create Account - De Anza</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="register">
+  <header class="header"><h1>Create Account</h1></header>
+
+  <div class="container">
+    <div class="form" style="max-width:540px;margin:18px auto">
+      <form id="register-form">
+        <label class="small">Full name</label>
+        <input class="input" name="name" placeholder="Your full name" required />
+        <label class="small">Student ID (required)</label>
+        <input class="input" name="studentId" placeholder="e.g. 12345678" required />
+        <label class="small">Create password</label>
+        <input class="input" type="password" name="password" placeholder="Choose a password" required />
+        <div style="margin-top:14px;display:flex;gap:12px;">
+          <button class="btn" type="submit">Create account</button>
+          <a class="btn" href="login.html" style="background:#fff;color:#000">Back to sign in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <a href="index.html"><img src="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" alt="logo"></a>
+  </footer>
+
+  <script src="script.js"></script>
+  
+  <script>
+    if(typeof initRegister === 'function') {
+      initRegister(); 
+    } else {
+      console.error("Error: script.js is not linked correctly.");
+    }
+  </script>
+</body>
+</html>

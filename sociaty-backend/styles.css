@@ -1,0 +1,237 @@
+:root{
+  --primary-red:#6e0b0f;
+  --header-red:#4f090c;
+  --gold:#ebc034;
+  --muted:#f0f0f0;
+  --card-border: #2b2b2b;
+  --accent:#3fa9f5;
+  --max-width:1100px;
+  --radius:16px;
+  --shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#f6e7b5 0%, #f0ce55 100%);
+  color:#111;
+  display:flex;
+  min-height:100vh;
+  flex-direction:column;
+}
+
+/* header */
+.header{
+  background:var(--header-red);
+  color:white;
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:8px 18px;
+}
+.header h1{margin:0;font-size:1.8rem;letter-spacing:0.5px}
+.header .icon{
+  position:absolute;
+  right:18px;
+  top:14px;
+  background:#fff;border-radius:50%;
+  width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-size:1.4rem;border:3px solid var(--header-red)
+}
+
+/* container */
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin: 24px auto;
+  padding: 0 18px 80px;
+  flex:1 0 auto;
+}
+
+/* footer logo */
+.site-footer{
+  background:var(--header-red);
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  margin-top:auto;
+}
+.site-footer img{height:50px;cursor:pointer}
+
+/* MENU buttons for index */
+.menu-grid{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  margin-top:40px;
+}
+.btn{
+  background:var(--gold);
+  color:#000;
+  border:3px solid #222;
+  border-radius:14px;
+  padding:18px 36px;
+  font-weight:700;
+  font-size:1.2rem;
+  text-decoration:none;
+  display:inline-block;
+  width:320px;
+  text-align:center;
+  box-shadow: var(--shadow);
+}
+.btn:hover{transform:translateY(-3px);transition:all .16s}
+
+/* Marketplace action bar */
+.action-bar{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  align-items:center;
+  margin:18px 0 28px;
+  flex-wrap:wrap;
+}
+.pill{
+  background:#fff;border:3px solid #111;border-radius:18px;padding:12px 28px;font-size:1.1rem;font-weight:700;cursor:pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.pill:hover{transform:scale(1.02)}
+
+/* search icon & input */
+.search-container{display:flex;align-items:center;gap:8px;position:relative}
+.search-icon{font-size:1.8rem;cursor:pointer}
+#search-input{display:none;padding:10px 12px;border-radius:12px;border:2px solid #222;font-size:1rem;outline:none}
+
+/* categories grid (4x2) */
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:10px;
+}
+.category-item{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+}
+.icon-box{
+  width:100%;
+  aspect-ratio:1/1;
+  background:#fff;border-radius:16px;border:3px solid #111;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+  transition:transform .14s;
+}
+.icon-box i{font-size:48px}
+.icon-box:hover{transform:translateY(-6px)}
+
+/* category label */
+.cat-label{font-weight:800;margin-top:10px;line-height:1.15;font-size:1rem}
+
+/* responsive for small screens */
+@media (max-width:1000px){
+  .category-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:700px){
+  .category-grid{grid-template-columns:repeat(2,1fr)}
+  #search-input{display:block; width:180px}
+}
+
+/* listings page */
+.listings-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;margin-top:12px;
+}
+
+/* --- NEW MODERN CARD STYLES (Idea #2) --- */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  /* Remove the thick red border, use a subtle shadow instead for a modern look */
+  border: 1px solid #eee; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden; /* Keeps image corners rounded */
+  position: relative;
+  display: flex;        /* Keeps layout consistent */
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 180px; /* Make images taller */
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin: 12px 12px 4px;
+  color: #111;
+}
+
+.card p {
+  flex: 1;
+  margin: 0 12px 12px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.card .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px 12px;
+  margin-top: auto;
+}
+
+.card .price {
+  font-size: 1.2rem;
+  color: #6e0b0f; /* De Anza Red */
+  font-weight: 800;
+}
+
+.card button {
+  background: var(--gold);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.card button:hover {
+  opacity: 0.9;
+}
+/* --- END NEW CARD STYLES --- */
+
+/* sell page form */
+.form{
+  background:#fff;border-radius:12px;padding:18px;border:3px solid var(--primary-red);box-shadow:var(--shadow);max-width:900px;margin:0 auto;
+}
+.form .row{display:flex;gap:12px;flex-wrap:wrap}
+.input, textarea, select{width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;font-size:1rem}
+textarea{min-height:120px;resize:vertical}
+.form .media-preview{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.preview-thumb{width:120px;height:90px;border-radius:8px;object-fit:cover;border:2px solid #ddd}
+
+/* chats */
+.chat-list{max-width:900px;margin:0 auto}
+.chat-item{display:flex;gap:12px;padding:12px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(0,0,0,0.05);align-items:center}
+.chat-avatar{width:56px;height:56px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700}
+.chat-name{font-weight:800;color:#fff}
+
+/* small helper */
+.center{text-align:center}
+.small{font-size:.9rem;color:#444}
+
+/* nice focus for accessibility */
+input:focus, textarea:focus, button:focus { outline:3px solid rgba(62,138,255,0.25); outline-offset:2px }

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Messages - De Anza Marketplace</title>
+  <link rel="icon" href="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    * { box-sizing: border-box; }
+
+    /* Header */
+    .header { background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; padding: 15px 20px; }
+    .header-inner { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .header-title { font-size: 1.4rem; color: #6e0b0f; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .home-btn { color: #666; font-size: 1.2rem; transition: color 0.2s; }
+    .home-btn:hover { color: #6e0b0f; }
+
+    /* Container */
+    .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+    .page-title { font-size: 1.8rem; margin: 0 0 20px 0; color: #222; }
+
+    /* Search Bar */
+    .search-wrapper {
+      position: relative; margin-bottom: 25px;
+    }
+    .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
+    .search-input {
+      width: 100%; padding: 12px 15px 12px 40px; border-radius: 12px;
+      border: 1px solid #ddd; font-size: 1rem; outline: none; background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+    .search-input:focus { border-color: #6e0b0f; }
+
+    /* Chat List */
+    .chat-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .chat-item {
+      background: white; padding: 15px; border-radius: 16px;
+      display: flex; align-items: center; gap: 15px;
+      border: 1px solid #eee; transition: all 0.2s ease;
+      cursor: pointer; position: relative;
+    }
+    .chat-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: #ebc034; }
+
+    /* Avatar */
+    .avatar-box { position: relative; }
+    .avatar {
+      width: 50px; height: 50px; border-radius: 50%; background: #eee;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #555; font-size: 1.1rem;
+      object-fit: cover;
+    }
+    /* Status Dot */
+    .status-dot {
+      position: absolute; bottom: 0; right: 0;
+      width: 12px; height: 12px; background: #2ecc71;
+      border-radius: 50%; border: 2px solid white;
+    }
+    .status-offline { background: #ccc; }
+
+    /* Content */
+    .chat-content { flex: 1; min-width: 0; /* Fixes text truncation */ }
+    .chat-header-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .chat-name { font-weight: 700; font-size: 1rem; color: #333; }
+    .chat-time { font-size: 0.8rem; color: #999; }
+    
+    .chat-preview {
+      color: #666; font-size: 0.9rem; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .unread { color: #333; font-weight: 600; }
+
+    /* Unread Badge */
+    .unread-badge {
+      background: #6e0b0f; color: white; font-size: 0.75rem;
+      padding: 2px 8px; border-radius: 10px; margin-left: 10px;
+    }
+
+    /* Empty State */
+    .empty-state { text-align: center; padding: 40px; color: #888; }
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-title">
+        <img src="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" alt="Logo" style="height:35px;">
+        Messages
+      </div>
+      <a href="marketplace.html" class="home-btn" title="Home"><i class="fas fa-home"></i></a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div class="search-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="text" class="search-input" placeholder="Search messages...">
+    </div>
+
+    <div class="chat-list">
+      
+      <a class="chat-item" href="chat.html">
+        <div class="avatar-box">
+          <div class="avatar" style="background:#ffebee; color:#6e0b0f;">AJ</div>
+          <div class="status-dot"></div>
+        </div>
+        <div class="chat-content">
+          <div class="chat-header-row">
+            <span class="chat-name">Amy Jiang <span style="font-weight:400; color:#888; font-size:0.85rem;">(Calculus Book)</span></span>
+            <span class="chat-time">10:35 AM</span>
+          </div>
+          <div class="chat-preview unread">Great, how about the library in 20 mins?</div>
+        </div>
+        <div class="unread-badge">1</div>
+      </a>
+
+      <a class="chat-item" href="chat.html">
+        <div class="avatar-box">
+          <div class="avatar" style="background:#e3f2fd; color:#1565c0;">K</div>
+          <div class="status-dot status-offline"></div>
+        </div>
+        <div class="chat-content">
+          <div class="chat-header-row">
+            <span class="chat-name">Kelly <span style="font-weight:400; color:#888; font-size:0.85rem;">(Bike)</span></span>
+            <span class="chat-time">Yesterday</span>
+          </div>
+          <div class="chat-preview">Is this still available?</div>
+        </div>
+      </a>
+
+      <a class="chat-item" href="chat.html">
+        <div class="avatar-box">
+          <div class="avatar" style="background:#f3e5f5; color:#7b1fa2;">JD</div>
+          <div class="status-dot"></div>
+        </div>
+        <div class="chat-content">
+          <div class="chat-header-row">
+            <span class="chat-name">John Doe <span style="font-weight:400; color:#888; font-size:0.85rem;">(Headphones)</span></span>
+            <span class="chat-time">Mon</span>
+          </div>
+          <div class="chat-preview">Thanks for the info!</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

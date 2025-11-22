@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>De Anza Marketplace</title>
+  <link rel="icon" href="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdfcf5; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    * { box-sizing: border-box; }
+    
+    /* Header Styles */
+    .header { background-color: #fff; border-bottom: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 15px 20px; position: sticky; top: 0; z-index: 1000; }
+    .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; }
+    .logo-group { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: opacity 0.2s; }
+    .logo-group:hover { opacity: 0.8; }
+    .da-logo { height: 45px; width: auto; object-fit: contain; }
+    .header-title { margin: 0; font-size: 1.4rem; color: #6e0b0f; font-weight: 700; }
+    
+    /* User Menu */
+    .user-menu-container { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+    .user-icon { font-size: 1.8rem; color: #6e0b0f; cursor: pointer; transition: transform 0.2s; }
+    .user-icon:hover { transform: scale(1.1); }
+    .dropdown-menu { display: none; position: absolute; top: 45px; right: 0; background-color: white; min-width: 240px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid #f0f0f0; z-index: 1001; overflow: hidden; animation: fadeIn 0.2s ease-out; }
+    .dropdown-menu.show { display: block; }
+    .dropdown-header { padding: 12px 15px; background-color: #f9f9f9; font-size: 0.85rem; font-weight: 700; color: #666; text-transform: uppercase; border-bottom: 1px solid #eee; }
+    .dropdown-item { padding: 12px 15px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #333; transition: background 0.2s; border-bottom: 1px solid #fcfcfc; }
+    .dropdown-item:hover { background-color: #fffbe6; color: #6e0b0f; }
+    .status-dot { font-size: 0.5rem; color: #2ecc71; }
+    .badge-count { background-color: #e74c3c; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: auto; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    
+    /* Layout */
+    .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+    
+    /* Hero Banner */
+    .hero-banner { 
+      background: linear-gradient(135deg, #6e0b0f 0%, #4f090c 100%); 
+      color: white; 
+      padding: 40px; 
+      border-radius: 20px; 
+      margin-bottom: 30px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 20px;
+      box-shadow: 0 10px 25px rgba(110, 11, 15, 0.2); 
+    }
+    .hero-text h2 { margin: 0 0 10px 0; font-size: 2.2rem; }
+    .hero-text p { margin: 0; opacity: 0.9; font-size: 1.1rem; }
+    
+    /* Aesthetic Card */
+    .aesthetic-card {
+      background: rgba(255, 255, 255, 0.15); /* Glass effect */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 15px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 250px;
+    }
+    .aesthetic-card:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    
+    /* Image Container in White Box */
+    .glass-image-container {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      flex-shrink: 0;
+      background: #fff;
+    }
+    
+    .glass-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .glass-info { display: flex; flex-direction: column; }
+    .glass-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; font-weight: 600;}
+    .glass-title { font-size: 1.2rem; font-weight: 800; }
+
+    /* Action Buttons */
+    .action-bar { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
+    .action-btn { padding: 15px 50px; border-radius: 50px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; }
+    .btn-sell { background: linear-gradient(135deg, #f1c40f 0%, #d4ac0d 100%); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .btn-sell:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(241, 196, 15, 0.4); }
+    .btn-buy { background: linear-gradient(135deg, #6e0b0f 0%, #900C3F 100%); color: white; }
+    .btn-buy:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(110, 11, 15, 0.4); }
+    
+    /* Categories */
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; padding-bottom: 40px; }
+    .category-item { background: white; border-radius: 16px; padding: 30px 15px; text-align: center; transition: all 0.3s ease; border: 2px solid transparent; box-shadow: 0 4px 6px rgba(0,0,0,0.02); cursor: pointer; }
+    .category-item:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #ebc034; }
+    .icon-box { margin-bottom: 15px; height: 60px; display: flex; align-items: center; justify-content: center; }
+    .cat-label { font-weight: 600; color: #444; }
+    
+    /* Footer */
+    .site-footer { text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #eee; color: #888; font-size: 0.9rem; }
+  </style>
+</head>
+<body data-page="marketplace">
+
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo-group">
+        <img src="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" alt="De Anza Logo" class="da-logo">
+        <h1 class="header-title">De Anza Marketplace</h1>
+      </a>
+      <div class="user-menu-container">
+        <div class="icon user-icon" title="Account & Messages" onclick="toggleMenu()">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div id="userDropdown" class="dropdown-menu">
+          <div class="dropdown-header">Messages</div>
+          <a href="chats_list.html" class="dropdown-item">
+            <i class="fas fa-circle status-dot"></i> 
+            <span>John (Math Book)</span>
+            <span class="badge-count">1</span>
+          </a>
+          <a href="chats_list.html" class="dropdown-item">
+            <i class="fas fa-circle status-dot" style="color:#ccc"></i> 
+            <span>Sarah (Bike)</span>
+          </a>
+          <div class="dropdown-header">Account</div>
+          <a href="#" class="dropdown-item"><i class="fas fa-user-cog"></i> Profile</a>
+          <a href="mylistings.html" class="dropdown-item"><i class="fas fa-list-ul"></i> My Listings</a>
+          <a href="index.html" class="dropdown-item" style="color:#d32f2f;"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div class="hero-banner">
+      <div class="hero-text">
+        <h2>Welcome back, Student!</h2>
+        <p>Find cheap textbooks, furniture, and more.</p>
+      </div>
+
+      <div class="aesthetic-card" onclick="location.href='mylistings.html'">
+        <div class="glass-image-container">
+           <img src="https://via.placeholder.com/140x140.png?text=Item" alt="My Item">
+        </div>
+        <div class="glass-info">
+          <span class="glass-label">Active Items</span>
+          <span class="glass-title">My Listings <i class="fas fa-arrow-right" style="font-size:0.8rem; margin-left:5px;"></i></span>
+        </div>
+      </div>
+      </div>
+    
+    <div class="action-bar">
+      <button class="action-btn btn-sell" onclick="location.href='sell.html'">
+        <i class="fas fa-plus-circle"></i> Sell Item
+      </button>
+      <button class="action-btn btn-buy" onclick="location.href='listings.html'">
+        <i class="fas fa-shopping-cart"></i> Buy Items
+      </button>
+    </div>
+
+    <div class="category-grid">
+      <div class="category-item" data-cat="textbooks"><div class="icon-box"><i class="fas fa-book" style="color: #6e0b0f; font-size: 48px;"></i></div><div class="cat-label">Textbooks</div></div>
+      <div class="category-item" data-cat="study-supplies"><div class="icon-box"><i class="fas fa-pencil-ruler" style="color: #ebc034; font-size: 48px;"></i></div><div class="cat-label">Study Supplies</div></div>
+      <div class="category-item" data-cat="electronics"><div class="icon-box"><i class="fas fa-laptop" style="color: #6e0b0f; font-size: 48px;"></i></div><div class="cat-label">Electronics</div></div>
+      <div class="category-item" data-cat="bikes"><div class="icon-box"><i class="fas fa-bicycle" style="color: #ebc034; font-size: 48px;"></i></div><div class="cat-label">Bikes & Outdoors</div></div>
+      <div class="category-item" data-cat="housing"><div class="icon-box"><i class="fas fa-home" style="color: #6e0b0f; font-size: 48px;"></i></div><div class="cat-label">Housing & Roommates</div></div>
+      <div class="category-item" data-cat="services"><div class="icon-box"><i class="fas fa-tools" style="color: #ebc034; font-size: 48px;"></i></div><div class="cat-label">Services & Rentals</div></div>
+      <div class="category-item" data-cat="jobs"><div class="icon-box"><i class="fas fa-briefcase" style="color: #6e0b0f; font-size: 48px;"></i></div><div class="cat-label">Student Jobs</div></div>
+      <div class="category-item" data-cat="events"><div class="icon-box"><i class="fas fa-calendar-alt" style="color: #ebc034; font-size: 48px;"></i></div><div class="cat-label">Events & Activities</div></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">&copy; 2025 De Anza Marketplace</footer>
+
+  <script src="script.js"></script>
+
+  <script>
+    // 1. Restored Toggle Menu Logic
+    function toggleMenu() { document.getElementById("userDropdown").classList.toggle("show"); }
+    window.onclick = function(event) {
+      if (!event.target.matches('.user-icon') && !event.target.closest('.user-icon')) {
+        var dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) { openDropdown.classList.remove('show'); }
+        }
+      }
+    }
+    
+    // 2. Restored Category Logic
+    document.querySelectorAll('.category-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const cat = this.getAttribute('data-cat');
+        window.location.href = `listings.html?cat=${cat}`;
+      });
+    });
+
+    // 3. LOGIC TO FILL WHITE SQUARE WITH YOUR ITEM
+    (function updateMyActiveItemImage() {
+      // Get current user
+      const user = JSON.parse(localStorage.getItem('da_current'));
+      if(!user) return; // Not logged in
+
+      // Get all listings
+      const allItems = JSON.parse(localStorage.getItem('da_listings') || '[]');
+
+      // Find the NEWEST item that matches my ID
+      const myItem = allItems.find(item => item.studentId === user.studentId);
+
+      // If found, update the image src inside the whitespace
+      if (myItem && myItem.img) {
+        const imgContainer = document.querySelector('.glass-image-container img');
+        if (imgContainer) {
+          imgContainer.src = myItem.img;
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

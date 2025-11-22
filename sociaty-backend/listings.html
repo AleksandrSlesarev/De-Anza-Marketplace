@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Browse Listings - De Anza Marketplace</title>
+  <link rel="icon" href="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* --- BASE STYLES --- */
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #333; }
+    * { box-sizing: border-box; }
+
+    /* Header */
+    .header { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.04); position: sticky; top: 0; z-index: 100; padding: 15px 20px; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .header-title { font-size: 1.4rem; color: #6e0b0f; font-weight: 800; margin-left: 10px; letter-spacing: -0.5px; }
+    .sell-btn { background: #6e0b0f; color: white; padding: 10px 28px; border-radius: 30px; font-weight: 600; text-decoration: none; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(110, 11, 15, 0.3); }
+    .sell-btn:hover { transform: translateY(-2px); }
+
+    /* Container */
+    .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .page-title { font-size: 2.2rem; margin: 0 0 8px 0; color: #111; font-weight: 800; letter-spacing: -1px; }
+    .page-subtitle { margin: 0 0 40px 0; color: #666; font-size: 1.1rem; }
+
+    /* Filter Bar */
+    .filters-wrapper {
+      background: white; padding: 10px; border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border: 1px solid #f0f0f0;
+    }
+    .search-box { flex-grow: 1; position: relative; min-width: 240px; }
+    .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #999; }
+    .search-box input {
+      width: 100%; padding: 14px 20px 14px 45px; border-radius: 12px;
+      border: 2px solid transparent; background: #f9f9f9; font-size: 1rem; outline: none; transition: all 0.2s;
+    }
+    .search-box input:focus { background: white; border-color: #ebc034; box-shadow: 0 0 0 4px rgba(235, 192, 52, 0.1); }
+    .filter-select { padding: 14px 24px; border-radius: 12px; border: 1px solid #eee; background: white; font-size: 0.95rem; cursor: pointer; outline: none; font-weight: 500; }
+    .btn-filter { background: #333; color: white; padding: 14px 30px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+
+    /* Grid */
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      padding-bottom: 80px;
+    }
+
+    /* Card */
+    .card {
+      background: white; border-radius: 20px; overflow: hidden;
+      transition: all 0.3s ease; border: 1px solid #f0f0f0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      display: flex; flex-direction: column; cursor: pointer; position: relative;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: transparent; }
+    
+    .img-frame {
+      height: 240px; width: 100%; background: #f4f4f4;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+    }
+    .img-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .card:hover .img-frame img { transform: scale(1.05); }
+    
+    .cat-badge {
+      position: absolute; top: 15px; left: 15px;
+      background: rgba(255,255,255,0.9); color: #333; padding: 6px 12px;
+      border-radius: 30px; font-size: 0.7rem; text-transform: uppercase; font-weight: 800;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); letter-spacing: 0.5px;
+    }
+
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .card-title { font-size: 1.1rem; font-weight: 700; color: #111; margin: 0 0 8px 0; line-height: 1.4; }
+    .card-desc { font-size: 0.9rem; color: #777; margin-bottom: 20px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .card-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f5f5f5; padding-top: 15px; }
+    .price { font-size: 1.2rem; font-weight: 800; color: #6e0b0f; }
+    .btn-view { background: #f4f4f4; color: #333; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .card:hover .btn-view { background: #ebc034; }
+
+    /* --- PREMIUM MODAL STYLES --- */
+    .modal-overlay {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); z-index: 2000;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(8px); /* Frosted glass background */
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    .modal-content {
+      background: white; width: 95%; max-width: 900px;
+      border-radius: 24px; overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    
+    @media(min-width: 768px) {
+      .modal-content { flex-direction: row; height: 550px; }
+    }
+
+    /* Image Side */
+    .modal-img-col {
+      flex: 1.2; background: #f8f8f8; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .modal-img-col img { width: 100%; height: 100%; object-fit: cover; }
+    
+    /* Close Button */
+    .close-btn {
+      position: absolute; top: 20px; left: 20px; /* Moved to left for modern look */
+      background: rgba(255,255,255,0.9); border-radius: 50%; width: 40px; height: 40px;
+      border: none; cursor: pointer; font-size: 1.1rem; color: #333;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10; transition: transform 0.2s;
+    }
+    .close-btn:hover { transform: scale(1.1); }
+
+    /* Info Side */
+    .modal-info-col {
+      flex: 1; padding: 40px; display: flex; flex-direction: column;
+      overflow-y: auto; background: white;
+    }
+
+    .modal-cat { 
+      color: #888; font-size: 0.75rem; text-transform: uppercase; 
+      letter-spacing: 1.5px; font-weight: 700; margin-bottom: 10px; 
+    }
+    
+    .modal-title { 
+      font-size: 2.2rem; margin: 0 0 10px 0; line-height: 1.1; 
+      color: #111; font-weight: 800; letter-spacing: -0.5px;
+    }
+    
+    .modal-price { 
+      font-size: 2rem; color: #6e0b0f; font-weight: 800; margin-bottom: 25px; 
+    }
+    
+    /* Seller Badge */
+    .seller-info {
+      display: flex; align-items: center; gap: 15px; padding: 12px 16px;
+      background: #fdfcf5; border: 1px solid #eee; 
+      border-radius: 12px; margin-bottom: 25px;
+    }
+    .seller-avatar { 
+      width: 45px; height: 45px; background: #ebc034; 
+      border-radius: 50%; display: flex; align-items: center; 
+      justify-content: center; font-weight: bold; color: #333; font-size: 1.2rem;
+    }
+    .seller-text h4 { margin: 0; font-size: 0.95rem; color: #333; }
+    .seller-text span { font-size: 0.8rem; color: #2ecc71; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+    .modal-desc { 
+      font-size: 1rem; line-height: 1.6; color: #555; 
+      margin-bottom: 30px; flex: 1; 
+    }
+    
+    /* Message Button */
+    .btn-msg {
+      width: 100%; background: #6e0b0f; color: white; border: none;
+      padding: 16px; border-radius: 14px; font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 8px 20px rgba(110, 11, 15, 0.2);
+    }
+    .btn-msg:hover { background: #50080b; transform: translateY(-2px); }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="marketplace.html" style="text-decoration:none; display:flex; align-items:center;">
+        <img src="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" class="logo" alt="Logo" style="height:45px;">
+        <span class="header-title">De Anza Marketplace</span>
+      </a>
+      <a href="sell.html" class="sell-btn"><i class="fas fa-plus"></i> Sell</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 class="page-title">Browse Listings</h2>
+    <p class="page-subtitle">Find textbooks, electronics, and gear from other students.</p>
+
+    <div class="filters-wrapper">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input id="filter-search" type="text" placeholder="Search items...">
+      </div>
+      <select id="filter-cat" class="filter-select">
+        <option value="">All Categories</option>
+        <option value="textbooks">Textbooks</option>
+        <option value="electronics">Electronics</option>
+        <option value="bikes">Bikes</option>
+        <option value="housing">Housing</option>
+      </select>
+      <button id="btn-apply" class="btn-filter">Filter</button>
+    </div>
+
+    <div id="product-grid" class="listings-grid"></div>
+  </div>
+
+  <div id="product-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      
+      <div class="modal-img-col">
+        <button class="close-btn" onclick="closeModalForce()"><i class="fas fa-times"></i></button>
+        <img id="m-img" src="" alt="Product">
+      </div>
+
+      <div class="modal-info-col">
+        <div id="m-cat" class="modal-cat">Category</div>
+        <h2 id="m-title" class="modal-title">Product Title</h2>
+        <div id="m-price" class="modal-price">$0.00</div>
+        
+        <div class="seller-info">
+          <div class="seller-avatar"><i class="fas fa-user"></i></div>
+          <div class="seller-text">
+            <h4>Sold by Student</h4>
+            <span><i class="fas fa-check-circle"></i> Verified Student ID</span>
+          </div>
+        </div>
+
+        <p id="m-desc" class="modal-desc">Description goes here...</p>
+        
+        <a href="chat.html" class="btn-msg">
+          <i class="fas fa-comment-alt"></i> Message Seller
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    const SAMPLE_DATA = [
+      {id: 1, title: "Calculus Early Transcendentals", category: "textbooks", price: 45, desc: "Used for Math 1A and 1B. Good condition, minor highlighting on first few pages. Binder ready version.", img: "https://via.placeholder.com/500?text=Calculus+Book"},
+      {id: 2, title: "Sony WH-1000XM4 Headphones", category: "electronics", price: 150, desc: "Noise cancelling, barely used. Comes with original case and cables.", img: "https://via.placeholder.com/500?text=Headphones"},
+      {id: 3, title: "Giant Escape 3 Bike", category: "bikes", price: 200, desc: "Perfect for getting to campus. Recently serviced brakes and tires.", img: "https://via.placeholder.com/500?text=Bike"},
+      {id: 4, title: "Room for Rent in Cupertino", category: "housing", price: 850, desc: "Walking distance to De Anza. Shared bath, utilities included. Looking for quiet student.", img: "https://via.placeholder.com/500?text=Room"},
+      {id: 5, title: "iPad Air 4th Gen 64GB", category: "electronics", price: 320, desc: "Blue, 64GB. Screen protector installed since day one. No scratches.", img: "https://via.placeholder.com/500?text=iPad"},
+      {id: 6, title: "Chemistry Lab Coat (M)", category: "study-supplies", price: 15, desc: "Size Medium. Required for Chem 1A/1B classes. Clean.", img: "https://via.placeholder.com/500?text=Lab+Coat"},
+    ];
+
+    function initPage() {
+      let items = JSON.parse(localStorage.getItem('da_listings') || '[]');
+      // Self-Healing Data
+      if (items.length === 0) {
+        items = SAMPLE_DATA;
+        localStorage.setItem('da_listings', JSON.stringify(items));
+      }
+      renderGrid(items);
+
+      document.getElementById('btn-apply').onclick = () => filterGrid(items);
+      document.getElementById('filter-search').onkeyup = () => filterGrid(items);
+      document.getElementById('filter-cat').onchange = () => filterGrid(items);
+    }
+
+    function filterGrid(allItems) {
+      const search = document.getElementById('filter-search').value.toLowerCase();
+      const cat = document.getElementById('filter-cat').value;
+      const filtered = allItems.filter(item => {
+        return item.title.toLowerCase().includes(search) && (cat === "" || item.category === cat);
+      });
+      renderGrid(filtered);
+    }
+
+    function renderGrid(items) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+      if(items.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#888">No items found.</div>';
+        return;
+      }
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const imgUrl = (item.img && item.img.length > 20) ? item.img : 'https://via.placeholder.com/400?text=No+Image';
+        
+        card.onclick = () => openModal(item.id);
+
+        card.innerHTML = `
+          <div class="img-frame">
+            <span class="cat-badge">${item.category}</span>
+            <img src="${imgUrl}">
+          </div>
+          <div class="card-body">
+            <div class="card-title">${item.title}</div>
+            <div class="card-desc">${item.desc}</div>
+            <div class="card-footer">
+              <div class="price">$${item.price}</div>
+              <button class="btn-view">View</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // MODAL LOGIC
+    function openModal(id) {
+      const items = JSON.parse(localStorage.getItem('da_listings') || '[]');
+      const item = items.find(i => i.id === id);
+      if(!item) return;
+
+      const imgUrl = (item.img && item.img.length > 20) ? item.img : 'https://via.placeholder.com/600?text=No+Image';
+      document.getElementById('m-img').src = imgUrl;
+      document.getElementById('m-cat').textContent = item.category || 'General';
+      document.getElementById('m-title').textContent = item.title;
+      document.getElementById('m-price').textContent = '$' + item.price;
+      document.getElementById('m-desc').textContent = item.desc;
+
+      document.getElementById('product-modal').style.display = 'flex';
+    }
+
+    function closeModal(e) {
+      if(e.target.id === 'product-modal') {
+        document.getElementById('product-modal').style.display = 'none';
+      }
+    }
+    function closeModalForce() {
+      document.getElementById('product-modal').style.display = 'none';
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

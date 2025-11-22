@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sell Item - De Anza</title>
+  <link rel="icon" href="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" type="image/png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="sell">
+  <header class="header"><h1>Sell / Publish</h1></header>
+
+  <div class="container">
+    <div class="form">
+      <form id="sell-form">
+        <div class="row">
+          <div style="flex:1">
+            <label class="small">Title</label>
+            <input class="input" name="title" placeholder="E.g., Intro Biology textbook" required />
+          </div>
+          <div style="width:160px">
+            <label class="small">Category</label>
+            <select class="input" name="category" required>
+              <option value="textbooks">Textbooks</option>
+              <option value="study-supplies">Study Supplies</option>
+              <option value="electronics">Electronics</option>
+              <option value="bikes">Bikes</option>
+              <option value="housing">Housing</option>
+              <option value="services">Services</option>
+              <option value="jobs">Jobs</option>
+              <option value="events">Events</option>
+              <option value="misc">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="small" style="margin-top:12px">Description</label>
+        <textarea name="description" placeholder="Add details, condition, pickup info..." required></textarea>
+
+        <div class="row" style="margin-top:12px">
+          <div style="flex:1">
+            <label class="small">Price ($)</label>
+            <input class="input" type="number" name="price" step="0.01" placeholder="0" required />
+          </div>
+          <div style="width:220px">
+            <label class="small">Add photos</label>
+            <input id="media" class="input" type="file" name="media" accept="image/*" />
+          </div>
+        </div>
+
+        <div id="media-preview" class="media-preview"></div>
+
+        <div style="margin-top:14px;display:flex;gap:12px">
+          <button class="btn" type="submit">Publish</button>
+          <a class="btn" href="listings.html" style="background:#fff;color:#000">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <a href="marketplace.html"><img src="https://i.ibb.co/wNYjZG9k/Image-11-21-25-at-2-05-PM.png" alt="logo"></a>
+  </footer>
+
+  <script src="script.js"></script>
+  
+  <script>
+    if(typeof initSell === 'function') {
+      initSell();
+    }
+  </script>
+</body>
+</html>
